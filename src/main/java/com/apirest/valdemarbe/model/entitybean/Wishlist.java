@@ -5,9 +5,9 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "whislists")
-@NamedQuery(name = "Whislist.findAll", query = "SELECT w FROM Whislist w")
-public class Whislist implements Serializable {
+@Table(name = "wishlists")
+@NamedQuery(name = "Wishlist.findAll", query = "SELECT w FROM Wishlist w")
+public class Wishlist implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -18,7 +18,7 @@ public class Whislist implements Serializable {
     @JoinColumn(name = "email_user")
     private User user;
 
-    public Whislist() {
+    public Wishlist() {
     }
 
     public int getId() {

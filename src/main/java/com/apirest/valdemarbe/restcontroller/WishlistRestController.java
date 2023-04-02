@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.apirest.valdemarbe.model.entitybean.Whislist;
-import com.apirest.valdemarbe.service.WhislistService;
+import com.apirest.valdemarbe.model.entitybean.Wishlist;
+import com.apirest.valdemarbe.service.WishlistService;
 
 @RestController
 @RequestMapping("/rest/whislist")
-public class WhislistRestController {
+public class WishlistRestController {
 
     @Autowired
-    WhislistService whislistService;
+    WishlistService wishlistService;
 
     @GetMapping("/{email}")
     ResponseEntity<?> findWhislist(@PathVariable("email") String email) {
-        return new ResponseEntity<Whislist>(whislistService.findByUser(email), HttpStatus.OK);
+        return new ResponseEntity<Wishlist>(wishlistService.findByUser(email), HttpStatus.OK);
     }
 }

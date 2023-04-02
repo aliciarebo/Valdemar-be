@@ -7,7 +7,7 @@ import com.apirest.valdemarbe.model.entitybean.Wishlist;
 
 public interface WishlistRepository extends JpaRepository<Wishlist, Integer> {
 
-    @Query("select w from Whislist w where w.user.email = ?1")
+    @Query("select w from Wishlist w where w.user.email = ?1")
     public Wishlist findByUser(String email);
 
 }

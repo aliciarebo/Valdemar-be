@@ -12,14 +12,14 @@ import com.apirest.valdemarbe.model.entitybean.Wishlist;
 import com.apirest.valdemarbe.service.WishlistService;
 
 @RestController
-@RequestMapping("/rest/whislist")
+@RequestMapping("/rest/wishlist")
 public class WishlistRestController {
 
     @Autowired
     WishlistService wishlistService;
 
     @GetMapping("/{email}")
-    ResponseEntity<?> findWhislist(@PathVariable("email") String email) {
+    ResponseEntity<?> findWishlist(@PathVariable("email") String email) {
         return new ResponseEntity<Wishlist>(wishlistService.findByUser(email), HttpStatus.OK);
     }
 }

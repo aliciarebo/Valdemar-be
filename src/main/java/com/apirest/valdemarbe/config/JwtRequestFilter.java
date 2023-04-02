@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.apirest.valdemarbe.service.InvalidatedTokenService;
 import com.apirest.valdemarbe.service.JwtUserDetailsService;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -27,6 +28,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+
+	@Autowired
+	private InvalidatedTokenService invalidatedTokenService;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -49,6 +53,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			}
 		} else {
 			logger.warn("JWT Token does not begin with Bearer String");
+		}
+
+		if (invalidatedTokenService.isTokenInvalidated(jwtToken)) {
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			response.getWriter().write("La sesión ha expirado");
+			return;
 		}
 
 		// Once we get the token validate it.

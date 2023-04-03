@@ -60,4 +60,13 @@ public class BookRestController {
         return new ResponseEntity<List<Book>>(bookService.booksOfWishlist(id), HttpStatus.OK);
     }
 
+    @GetMapping("/title/{title}")
+    public ResponseEntity<?> findByTitle(@PathVariable("title") String title) {
+        List<Book> books = bookService.findByTitleContaining(title);
+        if (books.isEmpty()) {
+            return new ResponseEntity<String>("No existen libros con ese título", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
+    }
+
 }

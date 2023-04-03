@@ -34,4 +34,9 @@ public class BookServiceImpl implements BookService {
         return bookRepo.booksOfWishlist(idWishlist);
     }
 
+    @Override
+    public List<Book> findByTitleContaining(String title) {
+        return bookRepo.findByTitleContaining(title);
+    }
+
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.apirest.valdemarbe.model.entitybean.Book;
 
@@ -17,4 +18,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @Query("select b from Book b join b.wishlists w where w.id=?1")
     public List<Book> booksOfWishlist(int idWishlist);
+
+    @Query("SELECT b FROM Book b WHERE b.title LIKE %:title%")
+    public List<Book> findByTitleContaining(@Param("title") String title);
 }

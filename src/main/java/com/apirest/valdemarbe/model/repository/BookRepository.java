@@ -14,4 +14,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @Query("select b from Book b where b.collection.id = ?1")
     public List<Book> booksByCollection(int idCollection);
+
+    @Query("select b from Book b join b.wishlists w where w.id=?1")
+    public List<Book> booksOfWishlist(int idWishlist);
 }

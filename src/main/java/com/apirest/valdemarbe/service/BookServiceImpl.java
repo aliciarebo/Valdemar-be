@@ -29,4 +29,9 @@ public class BookServiceImpl implements BookService {
         return bookRepo.booksByCollection(idCollection);
     }
 
+    @Override
+    public List<Book> booksOfWishlist(int idWishlist) {
+        return bookRepo.booksOfWishlist(idWishlist);
+    }
+
 }

@@ -48,4 +48,9 @@ public class BookRestController {
         return new ResponseEntity<List<Book>>(bookService.booksByCollection(id), HttpStatus.OK);
     }
 
+    @GetMapping("/wishlist/{id}")
+    public ResponseEntity<?> findByWishlist(@PathVariable("id") int id) {
+        return new ResponseEntity<List<Book>>(bookService.booksOfWishlist(id), HttpStatus.OK);
+    }
+
 }

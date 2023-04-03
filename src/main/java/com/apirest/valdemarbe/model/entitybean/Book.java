@@ -1,6 +1,7 @@
 package com.apirest.valdemarbe.model.entitybean;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -28,6 +29,15 @@ public class Book implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_collection")
     private Collection collection;
+
+    @ManyToMany
+    @JoinTable(name = "books_wishlists", joinColumns = {
+            @JoinColumn(name = "id_book")
+    }, inverseJoinColumns = {
+            @JoinColumn(name = "id_wishlist")
+    })
+
+    private List<Wishlist> wishlists;
 
     public Book() {
     }

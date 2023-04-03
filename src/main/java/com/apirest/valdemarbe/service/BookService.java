@@ -10,4 +10,6 @@ public interface BookService {
     List<Book> booksByAuthor(int idAuthor);
 
     List<Book> booksByCollection(int idCollection);
+
+    List<Book> booksOfWishlist(int idWishlist);
 }

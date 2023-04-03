@@ -8,4 +8,6 @@ public interface BookService {
     List<Book> findAll();
 
     List<Book> booksByAuthor(int idAuthor);
+
+    List<Book> booksByCollection(int idCollection);
 }

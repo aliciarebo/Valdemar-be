@@ -24,4 +24,9 @@ public class BookServiceImpl implements BookService {
         return bookRepo.booksByAuthor(idAuthor);
     }
 
+    @Override
+    public List<Book> booksByCollection(int idCollection) {
+        return bookRepo.booksByCollection(idCollection);
+    }
+
 }

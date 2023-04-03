@@ -29,4 +29,9 @@ public class BookRestController {
         return new ResponseEntity<List<Book>>(bookService.booksByAuthor(id), HttpStatus.OK);
     }
 
+    @GetMapping("/collection/{id}")
+    public ResponseEntity<?> findByCollection(@PathVariable("id") int id) {
+        return new ResponseEntity<List<Book>>(bookService.booksByCollection(id), HttpStatus.OK);
+    }
+
 }

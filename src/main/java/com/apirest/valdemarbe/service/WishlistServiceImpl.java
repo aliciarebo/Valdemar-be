@@ -17,4 +17,9 @@ public class WishlistServiceImpl implements WishlistService {
         return wishlistRepo.findByUser(email);
     }
 
+    @Override
+    public Wishlist findOne(int idWishlist) {
+        return wishlistRepo.findById(idWishlist).orElse(null);
+    }
+
 }

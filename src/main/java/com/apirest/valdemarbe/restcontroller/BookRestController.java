@@ -14,6 +14,7 @@ import com.apirest.valdemarbe.model.entitybean.Book;
 import com.apirest.valdemarbe.service.AuthorService;
 import com.apirest.valdemarbe.service.BookService;
 import com.apirest.valdemarbe.service.CollectionService;
+import com.apirest.valdemarbe.service.WishlistService;
 
 @RestController
 @RequestMapping("/rest/book")
@@ -26,6 +27,9 @@ public class BookRestController {
 
     @Autowired
     AuthorService authorService;
+
+    @Autowired
+    WishlistService wishlistService;
 
     @GetMapping
     public ResponseEntity<List<Book>> findAll() {
@@ -50,6 +54,9 @@ public class BookRestController {
 
     @GetMapping("/wishlist/{id}")
     public ResponseEntity<?> findByWishlist(@PathVariable("id") int id) {
+        if (wishlistService.findOne(id) == null) {
+            return new ResponseEntity<String>("No existe esta lista", HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<List<Book>>(bookService.booksOfWishlist(id), HttpStatus.OK);
     }
 

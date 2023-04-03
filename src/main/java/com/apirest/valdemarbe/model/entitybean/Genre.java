@@ -1,13 +1,12 @@
 package com.apirest.valdemarbe.model.entitybean;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
 
 @Entity
-@Table(name = "collections")
-@NamedQuery(name = "Collection.findAll", query = "SELECT w FROM Collection w")
-public class Collection implements Serializable {
+@Table(name = "genres")
+@NamedQuery(name = "Genre.findAll", query = "SELECT w FROM Genre w")
+public class Genre implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -16,7 +15,7 @@ public class Collection implements Serializable {
 
     private String name;
 
-    public Collection() {
+    public Genre() {
     }
 
     public int getId() {

@@ -21,4 +21,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @Query("SELECT b FROM Book b WHERE b.title LIKE %:title%")
     public List<Book> findByTitleContaining(@Param("title") String title);
+
+    @Query("select b from Book b join b.genres g where g.id = ?1")
+    public List<Book> booksByGenre(int idGenre);
 }

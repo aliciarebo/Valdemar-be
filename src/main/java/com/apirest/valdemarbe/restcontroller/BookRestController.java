@@ -1,6 +1,5 @@
 package com.apirest.valdemarbe.restcontroller;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,6 +81,11 @@ public class BookRestController {
             return new ResponseEntity<String>("No existen libros con ese título", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
+    }
+
+    @GetMapping("/genre/{id}")
+    public ResponseEntity<?> findByGenre(@PathVariable("id") int id) {
+        return new ResponseEntity<List<Book>>(bookService.booksByGenre(id), HttpStatus.OK);
     }
 
 }

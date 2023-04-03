@@ -56,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/rest/authenticate", "/rest/register", "/rest/collection", "/rest/author",
 						"/rest/author/collection/**", "/rest/genre", "/rest/genre/collection/**", "/rest/book",
 						"/rest/book/author/**", "/rest/book/collection/**",
-						"/rest/book/title/**")
+						"/rest/book/title/**", "/rest/book/genre/**")
 				.permitAll().
 				// dont authenticate this particular request
 

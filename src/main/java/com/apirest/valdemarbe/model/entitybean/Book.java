@@ -39,6 +39,15 @@ public class Book implements Serializable {
 
     private List<Wishlist> wishlists;
 
+    @ManyToMany
+    @JoinTable(name = "books_genres", joinColumns = {
+            @JoinColumn(name = "id_book")
+    }, inverseJoinColumns = {
+            @JoinColumn(name = "id_genre")
+    })
+
+    private List<Genre> genres;
+
     public Book() {
     }
 

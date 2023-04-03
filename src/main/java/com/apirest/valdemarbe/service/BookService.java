@@ -14,4 +14,6 @@ public interface BookService {
     List<Book> booksOfWishlist(int idWishlist);
 
     List<Book> findByTitleContaining(String title);
+
+    List<Book> booksByGenre(int idGenre);
 }

@@ -6,4 +6,6 @@ public interface WishlistService {
     Wishlist findOne(int idWishlist);
 
     Wishlist findByUser(String email);
+
+    int saveWishlist(Wishlist wishlist);
 }

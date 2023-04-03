@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.apirest.valdemarbe.service.InvalidatedTokenService;
 import com.apirest.valdemarbe.service.JwtUserDetailsService;
 import com.apirest.valdemarbe.service.UserService;
+import com.apirest.valdemarbe.service.WishlistService;
 import com.apirest.valdemarbe.config.JwtTokenUtil;
 import com.apirest.valdemarbe.JwtRequest;
 import com.apirest.valdemarbe.JwtResponse;
 import com.apirest.valdemarbe.model.entitybean.User;
+import com.apirest.valdemarbe.model.entitybean.Wishlist;
 
 @RestController
 @RequestMapping("/rest")
@@ -48,6 +50,9 @@ public class JwtAuthenticationController {
 	@Autowired
 	private InvalidatedTokenService invalidatedTokenService;
 
+	@Autowired
+	WishlistService wishlistService;
+
 	@PostMapping("/authenticate")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
@@ -66,7 +71,17 @@ public class JwtAuthenticationController {
 		String password = user.getPassword();
 		user.setPassword(bcryptEncoder.encode(password));
 		user.setEnable(1);
-		return ResponseEntity.ok(userService.saveUser(user));
+
+		int result = userService.saveUser(user);
+
+		if (result == 1) {
+			Wishlist wishlist = new Wishlist();
+			wishlist.setUser(user);
+			wishlistService.saveWishlist(wishlist);
+			return ResponseEntity.ok(result);
+		}
+
+		return new ResponseEntity<String>("Algo falló", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping("/logout")

@@ -22,4 +22,15 @@ public class WishlistServiceImpl implements WishlistService {
         return wishlistRepo.findById(idWishlist).orElse(null);
     }
 
+    @Override
+    public int saveWishlist(Wishlist wishlist) {
+        try {
+            wishlistRepo.save(wishlist);
+            return 1;
+        } catch (Exception e) {
+            System.out.println("error" + e.getMessage());
+            return 0;
+        }
+    }
+
 }

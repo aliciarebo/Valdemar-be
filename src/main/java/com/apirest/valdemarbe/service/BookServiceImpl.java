@@ -19,4 +19,9 @@ public class BookServiceImpl implements BookService {
         return bookRepo.findAll();
     }
 
+    @Override
+    public List<Book> booksByAuthor(int idAuthor) {
+        return bookRepo.booksByAuthor(idAuthor);
+    }
+
 }

@@ -23,4 +23,9 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepo.findByCollection(idCollection);
     }
 
+    @Override
+    public Author findOne(int idAuthor) {
+        return authorRepo.findById(idAuthor).orElse(null);
+    }
+
 }

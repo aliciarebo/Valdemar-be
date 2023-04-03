@@ -1,6 +1,7 @@
 package com.apirest.valdemarbe.model.entitybean;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -15,6 +16,15 @@ public class Collection implements Serializable {
     private int id;
 
     private String name;
+
+    // uni-directional many-to-many association to Movie
+    // @ManyToMany
+    // @JoinTable(name = "collections_authors", joinColumns = {
+    // @JoinColumn(name = "id_collection")
+    // }, inverseJoinColumns = {
+    // @JoinColumn(name = "id_author")
+    // })
+    // private List<Author> authors;
 
     public Collection() {
     }
@@ -34,5 +44,13 @@ public class Collection implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    // public List<Author> getAuthors() {
+    // return authors;
+    // }
+
+    // public void setAuthors(List<Author> authors) {
+    // this.authors = authors;
+    // }
 
 }

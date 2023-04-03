@@ -53,7 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().authorizeRequests()
-				.antMatchers("/rest/authenticate", "/rest/register", "/rest/collection", "/rest/author")
+				.antMatchers("/rest/authenticate", "/rest/register", "/rest/collection", "/rest/author",
+						"/rest/author/collection/**")
 				.permitAll().
 				// dont authenticate this particular request
 

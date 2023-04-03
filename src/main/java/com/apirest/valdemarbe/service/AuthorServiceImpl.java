@@ -18,4 +18,9 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepo.findAll();
     }
 
+    @Override
+    public List<Author> findByCollection(int idCollection) {
+        return authorRepo.findByCollection(idCollection);
+    }
+
 }

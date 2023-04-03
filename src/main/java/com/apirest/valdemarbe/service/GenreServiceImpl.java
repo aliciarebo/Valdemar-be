@@ -23,4 +23,9 @@ public class GenreServiceImpl implements GenreService {
         return genreRepo.findByCollection(idCollection);
     }
 
+    @Override
+    public Genre findOne(int idGenre) {
+        return genreRepo.findById(idGenre).orElse(null);
+    }
+
 }

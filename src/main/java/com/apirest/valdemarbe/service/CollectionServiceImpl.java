@@ -19,4 +19,9 @@ public class CollectionServiceImpl implements CollectionService {
         return collectionRepo.findAll();
     }
 
+    @Override
+    public Collection findOne(int idCollection) {
+        return collectionRepo.findById(idCollection).orElse(null);
+    }
+
 }

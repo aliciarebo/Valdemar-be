@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().authorizeRequests()
 				.antMatchers("/rest/authenticate", "/rest/register", "/rest/collection", "/rest/author",
-						"/rest/author/collection/**", "/rest/genre", "/rest/genre/collection/**")
+						"/rest/author/collection/**", "/rest/genre", "/rest/genre/collection/**", "/rest/book")
 				.permitAll().
 				// dont authenticate this particular request
 

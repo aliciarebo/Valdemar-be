@@ -48,7 +48,7 @@ public class BookRestController {
         return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
     }
 
-    @GetMapping("{isbn}")
+    @GetMapping("/{isbn}")
     public ResponseEntity<?> findOne(@PathVariable("isbn") String isbn) {
         Book book = bookService.findOne(isbn);
         if (book == null) {

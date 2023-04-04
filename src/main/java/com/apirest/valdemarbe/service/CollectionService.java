@@ -7,5 +7,7 @@ import com.apirest.valdemarbe.model.entitybean.Collection;
 public interface CollectionService {
     List<Collection> findAll();
 
-    Collection findOne(int idCollection);
+    Collection findOne(String idCollection);
+
+    int saveCollection(Collection collection);
 }

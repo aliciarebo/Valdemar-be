@@ -9,11 +9,13 @@ public interface BookService {
 
     List<Book> booksByAuthor(int idAuthor);
 
-    List<Book> booksByCollection(int idCollection);
+    List<Book> booksByCollection(String idCollection);
 
     List<Book> booksOfWishlist(int idWishlist);
 
     List<Book> findByTitleContaining(String title);
 
     List<Book> booksByGenre(int idGenre);
+
+    int saveBook(Book book);
 }

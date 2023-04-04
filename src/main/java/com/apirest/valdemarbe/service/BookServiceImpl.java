@@ -25,7 +25,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> booksByCollection(int idCollection) {
+    public List<Book> booksByCollection(String idCollection) {
         return bookRepo.booksByCollection(idCollection);
     }
 
@@ -42,6 +42,16 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> booksByGenre(int idGenre) {
         return bookRepo.booksByGenre(idGenre);
+    }
+
+    @Override
+    public int saveBook(Book book) {
+        try {
+            bookRepo.save(book);
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
 }

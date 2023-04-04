@@ -20,8 +20,18 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
-    public Collection findOne(int idCollection) {
-        return collectionRepo.findById(idCollection).orElse(null);
+    public Collection findOne(String idCollection) {
+        return collectionRepo.findOne(idCollection);
+    }
+
+    @Override
+    public int saveCollection(Collection collection) {
+        try {
+            collectionRepo.save(collection);
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
 }

@@ -56,14 +56,6 @@ public class BookRestController {
         return new ResponseEntity<List<Book>>(bookService.booksByAuthor(id), HttpStatus.OK);
     }
 
-    @GetMapping("/collection/{id}")
-    public ResponseEntity<?> findByCollection(@PathVariable("id") int id) {
-        if (collectionService.findOne(id) == null) {
-            return new ResponseEntity<String>("No existe esa colección", HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<Book>>(bookService.booksByCollection(id), HttpStatus.OK);
-    }
-
     @GetMapping("/wishlist/{id}")
     public ResponseEntity<?> findByWishlist(@PathVariable("id") int id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

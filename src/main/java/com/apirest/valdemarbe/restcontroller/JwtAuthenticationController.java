@@ -99,7 +99,7 @@ public class JwtAuthenticationController {
 		return new ResponseEntity<String>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@PostMapping("/logout")
+	@GetMapping("/logout")
 	public ResponseEntity<?> logout(HttpServletRequest request) {
 		// invalidar el token de usuario y redirigirlo al login
 		String authHeader = request.getHeader("Authorization");

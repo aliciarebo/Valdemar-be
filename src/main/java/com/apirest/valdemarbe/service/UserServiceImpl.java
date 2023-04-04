@@ -1,5 +1,7 @@
 package com.apirest.valdemarbe.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,11 @@ public class UserServiceImpl implements UserService {
             return 0;
         }
 
+    }
+
+    @Override
+    public List<User> findByRol(int idRol) {
+        return userRepo.findByRol(idRol);
     }
 
 }

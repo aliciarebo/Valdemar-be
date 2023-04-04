@@ -1,5 +1,7 @@
 package com.apirest.valdemarbe.restcontroller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,6 +56,11 @@ public class JwtAuthenticationController {
 
 	@Autowired
 	WishlistService wishlistService;
+
+	@GetMapping("/rol/{id}")
+	public ResponseEntity<?> findByRol(@PathVariable("id") int id) {
+		return new ResponseEntity<List<User>>(userService.findByRol(id), HttpStatus.OK);
+	}
 
 	@PostMapping("/authenticate")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {

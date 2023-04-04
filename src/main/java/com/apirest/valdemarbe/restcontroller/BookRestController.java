@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apirest.valdemarbe.model.entitybean.Book;
@@ -21,7 +22,7 @@ import com.apirest.valdemarbe.service.GenreService;
 import com.apirest.valdemarbe.service.WishlistService;
 
 @RestController
-@RequestMapping("/rest/book")
+@RequestMapping("/api/books")
 public class BookRestController {
     @Autowired
     BookService bookService;
@@ -39,8 +40,12 @@ public class BookRestController {
     GenreService genreService;
 
     @GetMapping
-    public ResponseEntity<List<Book>> findAll() {
-        return new ResponseEntity<List<Book>>(bookService.findAll(), HttpStatus.OK);
+    public ResponseEntity<?> findByTitle(@RequestParam(required = true) String title) {
+        List<Book> books = bookService.findByTitleContaining(title);
+        if (books.isEmpty()) {
+            return new ResponseEntity<String>("No existen libros con ese título", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
     }
 
     @GetMapping("/author/{id}")
@@ -76,15 +81,6 @@ public class BookRestController {
         }
 
         return new ResponseEntity<List<Book>>(bookService.booksOfWishlist(id), HttpStatus.OK);
-    }
-
-    @GetMapping("/title/{title}")
-    public ResponseEntity<?> findByTitle(@PathVariable("title") String title) {
-        List<Book> books = bookService.findByTitleContaining(title);
-        if (books.isEmpty()) {
-            return new ResponseEntity<String>("No existen libros con ese título", HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
     }
 
     @GetMapping("/genre/{id}")

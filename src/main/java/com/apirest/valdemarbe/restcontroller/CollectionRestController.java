@@ -13,7 +13,7 @@ import com.apirest.valdemarbe.model.entitybean.Collection;
 import com.apirest.valdemarbe.service.CollectionService;
 
 @RestController
-@RequestMapping("/rest/collection")
+@RequestMapping("/api/collection")
 public class CollectionRestController {
     @Autowired
     CollectionService collectionService;

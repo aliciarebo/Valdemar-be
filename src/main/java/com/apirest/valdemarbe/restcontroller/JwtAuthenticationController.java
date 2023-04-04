@@ -33,7 +33,7 @@ import com.apirest.valdemarbe.model.entitybean.User;
 import com.apirest.valdemarbe.model.entitybean.Wishlist;
 
 @RestController
-@RequestMapping("/rest")
+@RequestMapping("/api")
 @CrossOrigin
 public class JwtAuthenticationController {
 

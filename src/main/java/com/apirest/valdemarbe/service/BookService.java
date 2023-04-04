@@ -7,17 +7,15 @@ import com.apirest.valdemarbe.model.entitybean.Book;
 public interface BookService {
     List<Book> findAll();
 
-    List<Book> booksByAuthor(int idAuthor);
-
     List<Book> booksByCollection(String idCollection);
 
-    List<Book> booksOfWishlist(int idWishlist);
-
     List<Book> findByTitleContaining(String title);
-
-    List<Book> booksByGenre(int idGenre);
 
     int saveBook(Book book);
 
     Book findOne(String isbn);
+
+    List<Book> booksOfWishlist(int idWishlist);
+
+    List<Book> filteredBooks(String idCollection, String[] genres, String[] authors);
 }

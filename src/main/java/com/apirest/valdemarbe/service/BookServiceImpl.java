@@ -20,28 +20,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> booksByAuthor(int idAuthor) {
-        return bookRepo.booksByAuthor(idAuthor);
-    }
-
-    @Override
     public List<Book> booksByCollection(String idCollection) {
         return bookRepo.booksByCollection(idCollection);
     }
 
     @Override
-    public List<Book> booksOfWishlist(int idWishlist) {
-        return bookRepo.booksOfWishlist(idWishlist);
-    }
-
-    @Override
     public List<Book> findByTitleContaining(String title) {
         return bookRepo.findByTitleContaining(title);
-    }
-
-    @Override
-    public List<Book> booksByGenre(int idGenre) {
-        return bookRepo.booksByGenre(idGenre);
     }
 
     @Override
@@ -57,6 +42,16 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book findOne(String isbn) {
         return bookRepo.findOne(isbn);
+    }
+
+    @Override
+    public List<Book> filteredBooks(String idCollection, String[] genres, String[] authors) {
+        return bookRepo.filteredBooks(idCollection, genres, authors);
+    }
+
+    @Override
+    public List<Book> booksOfWishlist(int idWishlist) {
+        return bookRepo.booksOfWishlist(idWishlist);
     }
 
 }

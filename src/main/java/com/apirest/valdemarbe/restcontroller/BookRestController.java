@@ -5,16 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.apirest.valdemarbe.model.entitybean.Book;
-import com.apirest.valdemarbe.model.entitybean.Wishlist;
+
 import com.apirest.valdemarbe.service.AuthorService;
 import com.apirest.valdemarbe.service.BookService;
 import com.apirest.valdemarbe.service.CollectionService;
@@ -48,8 +47,8 @@ public class BookRestController {
         return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
     }
 
-    @GetMapping("/{isbn}")
-    public ResponseEntity<?> findOne(@PathVariable("isbn") String isbn) {
+    @GetMapping("/id/{isbn}")
+    public ResponseEntity<?> findOne(@PathVariable String isbn) {
         Book book = bookService.findOne(isbn);
         if (book == null) {
             return new ResponseEntity<String>("Libro no encontrado", HttpStatus.NOT_FOUND);
@@ -57,39 +56,22 @@ public class BookRestController {
         return new ResponseEntity<Book>(book, HttpStatus.OK);
     }
 
-    @GetMapping("/author/{id}")
-    public ResponseEntity<?> findByAuthor(@PathVariable("id") int id) {
-        if (authorService.findOne(id) == null) {
-            return new ResponseEntity<String>("No existe ese autor", HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<Book>>(bookService.booksByAuthor(id), HttpStatus.OK);
+    @GetMapping("/{id}")
+    public String getFilteredBooks(@PathVariable("id") String id, @RequestParam String[] genres,
+            @RequestParam String[] authors) {
+        List<Book> books = bookService.filteredBooks(id, genres, authors);
+        System.out.println(books);
+        return "holiiiii :)";
     }
 
-    @GetMapping("/wishlist/{id}")
-    public ResponseEntity<?> findByWishlist(@PathVariable("id") int id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        // obtener el nombre de usuario del usuario autenticado
-        Wishlist wishlist = wishlistService.findOne(id);
-        String email = authentication.getName();
-
-        if (wishlist == null) {
-            return new ResponseEntity<String>("No existe esta lista", HttpStatus.NOT_FOUND);
+    @PostMapping
+    public ResponseEntity<?> createBook(@RequestBody Book book) {
+        int result = bookService.saveBook(book);
+        if (result == 1) {
+            return new ResponseEntity<Book>(book, HttpStatus.CREATED);
         }
 
-        // verificar si el usuario autenticado es el mismo que creó la lista de deseos
-        if (!wishlist.getUser().getEmail().equals(email)) {
-            return new ResponseEntity<String>("No estás autorizado para acceder a esta lista", HttpStatus.UNAUTHORIZED);
-        }
-
-        return new ResponseEntity<List<Book>>(bookService.booksOfWishlist(id), HttpStatus.OK);
-    }
-
-    @GetMapping("/genre/{id}")
-    public ResponseEntity<?> findByGenre(@PathVariable("id") int id) {
-        if (genreService.findOne(id) == null) {
-            return new ResponseEntity<String>("No existe ese género", HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<Book>>(bookService.booksByGenre(id), HttpStatus.OK);
+        return new ResponseEntity<String>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

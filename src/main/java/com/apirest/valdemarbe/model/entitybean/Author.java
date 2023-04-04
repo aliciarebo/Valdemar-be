@@ -19,9 +19,6 @@ public class Author implements Serializable {
 
     private String name;
 
-    // @ManyToMany(mappedBy = "authors")
-    // private List<Collection> collections;
-
     @ManyToMany
     @JoinTable(name = "collections_authors", joinColumns = {
             @JoinColumn(name = "id_collection")

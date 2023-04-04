@@ -18,4 +18,6 @@ public interface BookService {
     List<Book> booksByGenre(int idGenre);
 
     int saveBook(Book book);
+
+    Book findOne(String isbn);
 }

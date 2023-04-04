@@ -48,6 +48,15 @@ public class BookRestController {
         return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
     }
 
+    @GetMapping("{isbn}")
+    public ResponseEntity<?> findOne(@PathVariable("isbn") String isbn) {
+        Book book = bookService.findOne(isbn);
+        if (book == null) {
+            return new ResponseEntity<String>("Libro no encontrado", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Book>(book, HttpStatus.OK);
+    }
+
     @GetMapping("/author/{id}")
     public ResponseEntity<?> findByAuthor(@PathVariable("id") int id) {
         if (authorService.findOne(id) == null) {

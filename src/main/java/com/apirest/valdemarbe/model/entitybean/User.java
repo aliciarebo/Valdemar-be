@@ -19,6 +19,10 @@ public class User implements Serializable {
 
     private int enable;
 
+    @ManyToOne
+    @JoinColumn(name = "id_rol")
+    private Rol rol;
+
     public User() {
 
     }

@@ -13,7 +13,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query("select b from Book b where b.author.id = ?1")
     public List<Book> booksByAuthor(int idAuthor);
 
-    @Query("select b from Book b where b.collection.name = ?1")
+    @Query("select b from Book b where b.collection.id = ?1")
     public List<Book> booksByCollection(String idCollection);
 
     @Query("select b from Book b join b.wishlists w where w.id=?1")

@@ -33,7 +33,8 @@ public class CollectionRestController {
 
     @GetMapping("/{id}/books")
     public ResponseEntity<?> findByCollection(@PathVariable("id") String id) {
-        if (collectionService.findOne(id) == null) {
+        Collection collection = collectionService.findOne(id);
+        if (collection == null) {
             return new ResponseEntity<String>("No existe esa colección", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<List<Book>>(bookService.booksByCollection(id), HttpStatus.OK);

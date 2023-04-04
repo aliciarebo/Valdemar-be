@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "books")
 @NamedQuery(name = "Book.findAll", query = "SELECT w FROM Book w")
@@ -36,6 +38,7 @@ public class Book implements Serializable {
             @JoinColumn(name = "id_wishlist")
     })
 
+    @JsonIgnore
     private List<Wishlist> wishlists;
 
     @ManyToMany

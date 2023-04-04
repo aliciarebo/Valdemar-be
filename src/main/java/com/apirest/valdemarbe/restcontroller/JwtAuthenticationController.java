@@ -73,7 +73,11 @@ public class JwtAuthenticationController {
 
 		String token = jwtTokenUtil.generateToken(userDetails);
 
-		return ResponseEntity.ok(new JwtResponse(token));
+		String email = jwtTokenUtil.getEmailFromToken(token);
+
+		User user = userService.findByEmail(email);
+
+		return ResponseEntity.ok(new JwtResponse(token, user));
 	}
 
 	@PostMapping("/register")

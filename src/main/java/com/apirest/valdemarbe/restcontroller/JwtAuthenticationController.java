@@ -28,6 +28,7 @@ import com.apirest.valdemarbe.service.WishlistService;
 import com.apirest.valdemarbe.config.JwtTokenUtil;
 import com.apirest.valdemarbe.JwtRequest;
 import com.apirest.valdemarbe.JwtResponse;
+import com.apirest.valdemarbe.model.entitybean.Rol;
 import com.apirest.valdemarbe.model.entitybean.User;
 import com.apirest.valdemarbe.model.entitybean.Wishlist;
 
@@ -80,6 +81,7 @@ public class JwtAuthenticationController {
 		String password = user.getPassword();
 		user.setPassword(bcryptEncoder.encode(password));
 		user.setEnable(1);
+		user.setRol(new Rol(2, "user"));
 
 		int result = userService.saveUser(user);
 
@@ -87,10 +89,10 @@ public class JwtAuthenticationController {
 			Wishlist wishlist = new Wishlist();
 			wishlist.setUser(user);
 			wishlistService.saveWishlist(wishlist);
-			return ResponseEntity.ok(result);
+			return ResponseEntity.ok(user);
 		}
 
-		return new ResponseEntity<String>("Algo falló", HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<String>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping("/logout")

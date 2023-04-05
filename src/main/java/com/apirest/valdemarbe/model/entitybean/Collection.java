@@ -1,10 +1,13 @@
 package com.apirest.valdemarbe.model.entitybean;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "collections")
@@ -18,6 +21,16 @@ public class Collection implements Serializable {
     private String id;
 
     private String name;
+
+    @ManyToMany
+    @JoinTable(name = "collections_authors", joinColumns = {
+            @JoinColumn(name = "id_collection")
+    }, inverseJoinColumns = {
+            @JoinColumn(name = "id_author")
+    })
+
+    @JsonIgnore
+    private List<Author> authors;
 
     public Collection() {
     }
@@ -36,6 +49,14 @@ public class Collection implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 
 }

@@ -9,7 +9,7 @@ import com.apirest.valdemarbe.model.entitybean.Author;
 
 public interface AuthorRepository extends JpaRepository<Author, String> {
 
-    @Query("SELECT a FROM Author a JOIN a.collections c WHERE c.id = ?1")
+    @Query("SELECT c.authors FROM Collection c where c.id = ?1")
     List<Author> findByCollection(String id);
 
     @Query("select a from Author a where a.id = ?1")

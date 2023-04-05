@@ -10,5 +10,5 @@ public interface GenreService {
 
     Genre findOne(int idGenre);
 
-    List<Genre> findByCollection(int idCollection);
+    List<Genre> findByCollection(String id);
 }

@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().authorizeRequests()
 				.antMatchers("/api/authenticate", "/api/register", "/api/collections/**", "/api/books/**",
-						"/api/authors/**")
+						"/api/authors/**", "/api/genres/**")
 				.permitAll().
 				// dont authenticate this particular request
 

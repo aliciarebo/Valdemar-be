@@ -19,8 +19,8 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public List<Genre> findByCollection(int idCollection) {
-        return genreRepo.findByCollection(idCollection);
+    public List<Genre> findByCollection(String id) {
+        return genreRepo.findByCollection(id);
     }
 
     @Override

@@ -9,6 +9,6 @@ import com.apirest.valdemarbe.model.entitybean.Genre;
 
 public interface GenreRepository extends JpaRepository<Genre, Integer> {
 
-    @Query("select g from Genre g join g.collections c where c.id=?1")
-    public List<Genre> findByCollection(int idCollection);
+    @Query("select c.genres FROM Collection c WHERE c.id = ?1")
+    public List<Genre> findByCollection(String id);
 }

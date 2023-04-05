@@ -12,4 +12,6 @@ public interface AuthorService {
     List<Author> findByCollection(String id);
 
     int saveAuthor(Author author);
+
+    int deleteAuthor(String id);
 }

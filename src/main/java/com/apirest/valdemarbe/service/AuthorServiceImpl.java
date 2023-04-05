@@ -38,4 +38,14 @@ public class AuthorServiceImpl implements AuthorService {
         }
     }
 
+    @Override
+    public int deleteAuthor(String id) {
+        try {
+            authorRepo.deleteById(id);
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
 }

@@ -19,13 +19,13 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<Author> findByCollection(int idCollection) {
-        return authorRepo.findByCollection(idCollection);
+    public List<Author> findByCollection(String id) {
+        return authorRepo.findByCollection(id);
     }
 
     @Override
-    public Author findOne(int idAuthor) {
-        return authorRepo.findById(idAuthor).orElse(null);
+    public Author findOne(String id) {
+        return authorRepo.findOne(id);
     }
 
 }

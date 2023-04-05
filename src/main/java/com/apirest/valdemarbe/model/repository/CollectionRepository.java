@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.apirest.valdemarbe.model.entitybean.Collection;
 
-public interface CollectionRepository extends JpaRepository<Collection, Integer> {
+public interface CollectionRepository extends JpaRepository<Collection, String> {
 
     @Query("select c from Collection c where c.id = ?1")
     public Collection findOne(String idCollection);

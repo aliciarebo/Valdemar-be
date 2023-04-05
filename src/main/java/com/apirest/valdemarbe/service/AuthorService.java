@@ -7,7 +7,7 @@ import com.apirest.valdemarbe.model.entitybean.Author;
 public interface AuthorService {
     List<Author> findAll();
 
-    Author findOne(int idAuthor);
+    Author findOne(String idAuthor);
 
-    List<Author> findByCollection(int idCollection);
+    List<Author> findByCollection(String id);
 }

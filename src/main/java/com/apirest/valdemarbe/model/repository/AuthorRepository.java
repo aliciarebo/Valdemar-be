@@ -7,9 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.apirest.valdemarbe.model.entitybean.Author;
 
-public interface AuthorRepository extends JpaRepository<Author, Integer> {
+public interface AuthorRepository extends JpaRepository<Author, String> {
 
-    @Query("select a from Author a join a.collections c where c.id=?1")
-    public List<Author> findByCollection(int idCollection);
+    @Query("SELECT a FROM Author a JOIN a.collections c WHERE c.id = ?1")
+    List<Author> findByCollection(String id);
+
+    @Query("select a from Author a where a.id = ?1")
+    public Author findOne(String id);
 
 }

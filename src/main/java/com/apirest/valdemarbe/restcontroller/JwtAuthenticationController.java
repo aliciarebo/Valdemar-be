@@ -109,11 +109,12 @@ public class JwtAuthenticationController {
 		}
 
 		if (token != null) {
-			invalidatedTokenService.addInvalidatedToken(token);
 
 			if (invalidatedTokenService.isTokenInvalidated(token)) {
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("El token ya ha sido invalidado.");
 			}
+
+			invalidatedTokenService.addInvalidatedToken(token);
 		}
 		return ResponseEntity.ok("Logout exitoso");
 	}

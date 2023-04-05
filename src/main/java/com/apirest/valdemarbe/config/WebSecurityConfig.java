@@ -3,6 +3,7 @@ package com.apirest.valdemarbe.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -34,7 +35,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// configure AuthenticationManager so that it knows from where to load
 		// user for matching credentials
 		// Use BCryptPasswordEncoder
-		auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
+
+		auth.userDetailsService(jwtUserDetailsService)
+				.passwordEncoder(passwordEncoder());
 	}
 
 	@Bean
@@ -51,13 +54,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().authorizeRequests()
-				.antMatchers("/api/authenticate", "/api/register", "/api/collections/**", "/api/books/**",
-						"/api/authors/**", "/api/genres/**")
-				.permitAll().
+				.antMatchers("/api/authenticate", "/api/register", "/api/logout")
+				.permitAll()
+
+				.antMatchers(HttpMethod.GET, "/api/collections/**", "/api/genres/**", "/api/authors/**",
+						"/api/books/**")
+				.permitAll()
+
+				.antMatchers(HttpMethod.POST, "/api/collections")
+				.hasAuthority("admin")
 				// dont authenticate this particular request
 
 				// all other requests need to be authenticated
-				anyRequest().authenticated().and()
+				.anyRequest().authenticated().and()
 				.
 				// make sure we use stateless session; session won't be used to
 				// store user's state.

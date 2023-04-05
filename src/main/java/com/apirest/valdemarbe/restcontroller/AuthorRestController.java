@@ -46,7 +46,7 @@ public class AuthorRestController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createBook(@RequestBody Author author) {
+    public ResponseEntity<?> createAuthor(@RequestBody Author author) {
         int result = authorService.saveAuthor(author);
         if (result == 1) {
             return new ResponseEntity<Author>(author, HttpStatus.CREATED);

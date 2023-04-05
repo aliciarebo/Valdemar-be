@@ -11,4 +11,6 @@ public interface GenreService {
     Genre findOne(int idGenre);
 
     List<Genre> findByCollection(String id);
+
+    int saveGenre(Genre genre);
 }

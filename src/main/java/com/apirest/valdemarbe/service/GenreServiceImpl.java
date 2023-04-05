@@ -28,4 +28,14 @@ public class GenreServiceImpl implements GenreService {
         return genreRepo.findById(idGenre).orElse(null);
     }
 
+    @Override
+    public int saveGenre(Genre genre) {
+        try {
+            genreRepo.save(genre);
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
 }

@@ -6,13 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.apirest.valdemarbe.model.entitybean.Book;
 import com.apirest.valdemarbe.model.entitybean.Collection;
 import com.apirest.valdemarbe.service.BookService;
 import com.apirest.valdemarbe.service.CollectionService;
@@ -29,15 +28,6 @@ public class CollectionRestController {
     @GetMapping
     public ResponseEntity<List<Collection>> findAll() {
         return new ResponseEntity<List<Collection>>(collectionService.findAll(), HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}/books")
-    public ResponseEntity<?> findByCollection(@PathVariable("id") String id) {
-        Collection collection = collectionService.findOne(id);
-        if (collection == null) {
-            return new ResponseEntity<String>("No existe esa colección", HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<Book>>(bookService.booksByCollection(id), HttpStatus.OK);
     }
 
     @PostMapping

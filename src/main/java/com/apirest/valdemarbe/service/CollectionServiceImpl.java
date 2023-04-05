@@ -34,4 +34,14 @@ public class CollectionServiceImpl implements CollectionService {
         }
     }
 
+    @Override
+    public int deleteCollection(String id) {
+        try {
+            collectionRepo.deleteById(id);
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
 }

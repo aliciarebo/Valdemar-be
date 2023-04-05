@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -99,5 +100,18 @@ public class CollectionRestController {
         collectionService.saveCollection(collection);
 
         return new ResponseEntity<String>("Añadido", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteBook(@PathVariable("id") String id) {
+
+        Collection collection = collectionService.findOne(id);
+
+        if (collection == null) {
+            return new ResponseEntity<String>("Ese libro no existe", HttpStatus.NOT_FOUND);
+        }
+
+        collectionService.deleteCollection(id);
+        return new ResponseEntity<String>("Libro borrado", HttpStatus.OK);
     }
 }

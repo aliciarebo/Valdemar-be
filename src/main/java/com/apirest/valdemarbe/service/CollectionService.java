@@ -10,4 +10,6 @@ public interface CollectionService {
     Collection findOne(String idCollection);
 
     int saveCollection(Collection collection);
+
+    int deleteCollection(String id);
 }

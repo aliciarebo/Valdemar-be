@@ -64,7 +64,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.POST, "/api/collections/**", "/api/authors", "/api/genres")
 				.hasAuthority("admin")
 
-				.antMatchers(HttpMethod.DELETE, "/api/authors/**", "/api/books/**", "/api/collections/**")
+				.antMatchers(HttpMethod.DELETE, "/api/authors/**", "/api/books/**", "/api/collections/**",
+						"/api/genres/**")
 				.hasAuthority("admin")
 				// dont authenticate this particular request
 

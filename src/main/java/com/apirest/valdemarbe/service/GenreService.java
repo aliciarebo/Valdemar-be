@@ -13,4 +13,6 @@ public interface GenreService {
     List<Genre> findByCollection(String id);
 
     int saveGenre(Genre genre);
+
+    int deleteGenre(Genre genre);
 }

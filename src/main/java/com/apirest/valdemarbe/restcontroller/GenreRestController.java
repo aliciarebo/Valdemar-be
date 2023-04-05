@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,5 +55,18 @@ public class GenreRestController {
         }
 
         return new ResponseEntity<String>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteGenre(@PathVariable("id") String id) {
+
+        Genre genre = genreService.findOne(id);
+
+        if (genre == null) {
+            return new ResponseEntity<String>("El genero no existe", HttpStatus.NOT_FOUND);
+        }
+
+        genreService.deleteGenre(genre);
+        return new ResponseEntity<String>("Género borrado", HttpStatus.OK);
     }
 }

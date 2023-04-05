@@ -38,4 +38,14 @@ public class GenreServiceImpl implements GenreService {
         }
     }
 
+    @Override
+    public int deleteGenre(Genre genre) {
+        try {
+            genreRepo.delete(genre);
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
 }

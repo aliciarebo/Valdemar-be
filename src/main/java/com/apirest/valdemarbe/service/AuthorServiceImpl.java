@@ -28,4 +28,14 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepo.findOne(id);
     }
 
+    @Override
+    public int saveAuthor(Author author) {
+        try {
+            authorRepo.save(author);
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
 }

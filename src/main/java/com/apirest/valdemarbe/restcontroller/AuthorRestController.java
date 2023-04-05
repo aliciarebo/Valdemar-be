@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,6 +43,16 @@ public class AuthorRestController {
             return new ResponseEntity<String>("No existe esa colección", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<List<Author>>(authorService.findByCollection(id), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<?> createBook(@RequestBody Author author) {
+        int result = authorService.saveAuthor(author);
+        if (result == 1) {
+            return new ResponseEntity<Author>(author, HttpStatus.CREATED);
+        }
+
+        return new ResponseEntity<String>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

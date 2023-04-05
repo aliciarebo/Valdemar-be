@@ -10,4 +10,6 @@ public interface AuthorService {
     Author findOne(String idAuthor);
 
     List<Author> findByCollection(String id);
+
+    int saveAuthor(Author author);
 }

@@ -32,6 +32,11 @@ public class GenreRestController {
         return new ResponseEntity<List<Genre>>(genreService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Genre> findOne(@PathVariable("id") String id) {
+        return new ResponseEntity<Genre>(genreService.findOne(id), HttpStatus.OK);
+    }
+
     @GetMapping("/collections/{id}")
     public ResponseEntity<?> findByCollection(@PathVariable("id") String id) {
         Collection collection = collectionService.findOne(id);

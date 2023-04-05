@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.apirest.valdemarbe.model.entitybean.Author;
 import com.apirest.valdemarbe.model.entitybean.Collection;
+import com.apirest.valdemarbe.model.entitybean.Genre;
 import com.apirest.valdemarbe.service.AuthorService;
 import com.apirest.valdemarbe.service.BookService;
 import com.apirest.valdemarbe.service.CollectionService;
+import com.apirest.valdemarbe.service.GenreService;
 
 @RestController
 @RequestMapping("/api/collections")
@@ -29,6 +31,9 @@ public class CollectionRestController {
 
     @Autowired
     AuthorService authorService;
+
+    @Autowired
+    GenreService genreService;
 
     @GetMapping
     public ResponseEntity<List<Collection>> findAll() {
@@ -68,6 +73,29 @@ public class CollectionRestController {
         }
 
         collection.getAuthors().add(auth);
+        collectionService.saveCollection(collection);
+
+        return new ResponseEntity<String>("Añadido", HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/genres")
+    public ResponseEntity<?> addGenre(@PathVariable("id") String id, @RequestBody Genre genre) {
+        Genre gen = genreService.findOne(genre.getId());
+        Collection collection = collectionService.findOne(id);
+
+        if (gen == null) {
+            return new ResponseEntity<String>("El género no existe o es incorrecto", HttpStatus.BAD_REQUEST);
+        }
+
+        if (collection == null) {
+            return new ResponseEntity<String>("La colección no existe o es incorrecta", HttpStatus.BAD_REQUEST);
+        }
+
+        if (collection.getGenres().contains(gen)) {
+            return new ResponseEntity<String>("El autor ya está presente en la colección", HttpStatus.BAD_REQUEST);
+        }
+
+        collection.getGenres().add(gen);
         collectionService.saveCollection(collection);
 
         return new ResponseEntity<String>("Añadido", HttpStatus.OK);

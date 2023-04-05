@@ -8,7 +8,7 @@ public interface GenreService {
 
     List<Genre> findAll();
 
-    Genre findOne(int idGenre);
+    Genre findOne(String id);
 
     List<Genre> findByCollection(String id);
 

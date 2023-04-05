@@ -18,4 +18,6 @@ public interface BookService {
     List<Book> booksOfWishlist(int idWishlist);
 
     List<Book> filteredBooks(String idCollection, String[] genres, String[] authors);
+
+    int deleteBook(Book book);
 }

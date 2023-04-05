@@ -54,4 +54,14 @@ public class BookServiceImpl implements BookService {
         return bookRepo.booksOfWishlist(idWishlist);
     }
 
+    @Override
+    public int deleteBook(Book book) {
+        try {
+            bookRepo.delete(book);
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
 }

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.apirest.valdemarbe.model.entitybean.Author;
 import com.apirest.valdemarbe.model.entitybean.Collection;
+import com.apirest.valdemarbe.service.AuthorService;
 import com.apirest.valdemarbe.service.BookService;
 import com.apirest.valdemarbe.service.CollectionService;
 
@@ -24,6 +26,9 @@ public class CollectionRestController {
 
     @Autowired
     BookService bookService;
+
+    @Autowired
+    AuthorService authorService;
 
     @GetMapping
     public ResponseEntity<List<Collection>> findAll() {
@@ -43,5 +48,28 @@ public class CollectionRestController {
         }
 
         return new ResponseEntity<String>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PostMapping("/{id}/authors")
+    public ResponseEntity<?> addAuthor(@PathVariable("id") String id, @RequestBody Author author) {
+        Author auth = authorService.findOne(author.getId());
+        Collection collection = collectionService.findOne(id);
+
+        if (auth == null) {
+            return new ResponseEntity<String>("El autor no existe o es incorrecto", HttpStatus.BAD_REQUEST);
+        }
+
+        if (collection == null) {
+            return new ResponseEntity<String>("La colección no existe o es incorrecta", HttpStatus.BAD_REQUEST);
+        }
+
+        if (collection.getAuthors().contains(auth)) {
+            return new ResponseEntity<String>("El autor ya está presente en la colección", HttpStatus.BAD_REQUEST);
+        }
+
+        collection.getAuthors().add(auth);
+        collectionService.saveCollection(collection);
+
+        return new ResponseEntity<String>("Añadido", HttpStatus.OK);
     }
 }

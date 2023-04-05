@@ -39,6 +39,11 @@ public class BookRestController {
     GenreService genreService;
 
     @GetMapping
+    public ResponseEntity<List<Book>> findAll() {
+        return new ResponseEntity<List<Book>>(bookService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/title")
     public ResponseEntity<?> findByTitle(@RequestParam(required = true) String title) {
         List<Book> books = bookService.findByTitleContaining(title);
         if (books.isEmpty()) {

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,28 +46,27 @@ public class WishlistRestController {
         return new ResponseEntity<List<Book>>(user.getWishlist().getBooks(), HttpStatus.OK);
     }
 
-    // @PostMapping
-    // ResponseEntity<?> addBook(HttpServletRequest request, @RequestBody String
-    // isbn) {
-    // String token = request.getHeader("Authorization").substring(7);
-    // String email = jwtTokenUtil.getEmailFromToken(token);
+    @PostMapping
+    ResponseEntity<?> addBookToWishlist(HttpServletRequest request, @RequestBody Book rqBodyBook) {
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtTokenUtil.getEmailFromToken(token);
 
-    // Wishlist wishlist = wishlistService.findByUser(email);
+        User user = userService.findByEmail(email);
+        Book book = bookService.findOne(rqBodyBook.getIsbn());
 
-    // Book book = bookService.findOne(isbn);
+        if (book == null) {
+            return new ResponseEntity<String>("El libro no existe",
+                    HttpStatus.BAD_REQUEST);
+        }
 
-    // if (book == null) {
-    // return new ResponseEntity<String>("El libro no existe",
-    // HttpStatus.BAD_REQUEST);
-    // }
+        if (user.getWishlist().getBooks().contains(book)) {
+            return new ResponseEntity<String>("El libro ya está en la wishlist",
+                    HttpStatus.BAD_REQUEST);
+        }
 
-    // if (wishlist.getBooks().contains(book)) {
-    // return new ResponseEntity<String>("El libro ya está en la wishlist",
-    // HttpStatus.BAD_REQUEST);
-    // }
-
-    // wishlist.getBooks().add(book);
-    // return new ResponseEntity<String>("Libro añadido a la lista de deseos",
-    // HttpStatus.OK);
-    // }
+        user.getWishlist().getBooks().add(book);
+        userService.saveUser(user);
+        return new ResponseEntity<String>("Libro añadido a la lista de deseos",
+                HttpStatus.OK);
+    }
 }

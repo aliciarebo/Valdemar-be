@@ -15,8 +15,6 @@ public interface BookService {
 
     Book findOne(String isbn);
 
-    List<Book> booksOfWishlist(int idWishlist);
-
     List<Book> filteredBooks(String idCollection, String[] genres, String[] authors);
 
     int deleteBook(Book book);

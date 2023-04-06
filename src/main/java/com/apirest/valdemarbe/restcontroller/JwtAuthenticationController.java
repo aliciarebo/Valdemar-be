@@ -91,8 +91,8 @@ public class JwtAuthenticationController {
 
 		if (result == 1) {
 			Wishlist wishlist = new Wishlist();
-			wishlist.setUser(user);
-			wishlistService.saveWishlist(wishlist);
+			user.setWishlist(wishlist);
+			userService.saveUser(user);
 			return ResponseEntity.ok(user);
 		}
 

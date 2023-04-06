@@ -13,13 +13,8 @@ public class WishlistServiceImpl implements WishlistService {
     WishlistRepository wishlistRepo;
 
     @Override
-    public Wishlist findByUser(String email) {
-        return wishlistRepo.findByUser(email);
-    }
-
-    @Override
-    public Wishlist findOne(int idWishlist) {
-        return wishlistRepo.findById(idWishlist).orElse(null);
+    public Wishlist findOne(String id) {
+        return wishlistRepo.findOne(id);
     }
 
     @Override
@@ -28,7 +23,7 @@ public class WishlistServiceImpl implements WishlistService {
             wishlistRepo.save(wishlist);
             return 1;
         } catch (Exception e) {
-            System.out.println("error" + e.getMessage());
+            e.printStackTrace();
             return 0;
         }
     }

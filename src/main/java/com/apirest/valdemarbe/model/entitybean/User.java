@@ -22,6 +22,10 @@ public class User implements Serializable {
 
     private int enable;
 
+    @OneToOne
+    @JoinColumn(name = "id_wishlist")
+    private Wishlist wishlist;
+
     @ManyToOne
     @JoinColumn(name = "id_rol")
     private Rol rol;
@@ -68,6 +72,14 @@ public class User implements Serializable {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public Wishlist getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(Wishlist wishlist) {
+        this.wishlist = wishlist;
     }
 
 }

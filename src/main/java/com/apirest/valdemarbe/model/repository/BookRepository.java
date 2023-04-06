@@ -22,6 +22,4 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query("SELECT b FROM Book b JOIN b.genres g WHERE b.collection.id = ?1 AND (g.name IN (?2) OR b.author.name IN (?3))")
     public List<Book> filteredBooks(String idCollection, String[] genres, String[] authors);
 
-    @Query("select b from Book b join b.wishlists w where w.id=?1")
-    public List<Book> booksOfWishlist(int idWishlist);
 }

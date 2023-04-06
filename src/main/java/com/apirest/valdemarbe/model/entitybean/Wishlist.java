@@ -1,8 +1,11 @@
 package com.apirest.valdemarbe.model.entitybean;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "wishlists")
@@ -11,30 +14,35 @@ public class Wishlist implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    private String id;
 
-    @OneToOne
-    @JoinColumn(name = "email_user")
-    private User user;
+    @ManyToMany
+    @JoinTable(name = "books_wishlists", joinColumns = {
+            @JoinColumn(name = "id_book")
+    }, inverseJoinColumns = {
+            @JoinColumn(name = "id_wishlist")
+    })
+    private List<Book> books;
 
     public Wishlist() {
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public List<Book> getBooks() {
+        return books;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
 }

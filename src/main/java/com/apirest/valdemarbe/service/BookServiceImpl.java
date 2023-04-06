@@ -50,11 +50,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> booksOfWishlist(int idWishlist) {
-        return bookRepo.booksOfWishlist(idWishlist);
-    }
-
-    @Override
     public int deleteBook(Book book) {
         try {
             bookRepo.delete(book);

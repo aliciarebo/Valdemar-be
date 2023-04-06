@@ -87,16 +87,19 @@ public class JwtAuthenticationController {
 		user.setEnable(1);
 		user.setRol(new Rol(2, "user"));
 
-		int result = userService.saveUser(user);
-
-		if (result == 1) {
-			Wishlist wishlist = new Wishlist();
+		Wishlist wishlist = new Wishlist();
+		int wishlistResult = wishlistService.saveWishlist(wishlist);
+		if (wishlistResult == 1) {
 			user.setWishlist(wishlist);
-			userService.saveUser(user);
-			return ResponseEntity.ok(user);
+			int result = userService.saveUser(user);
+
+			if (result == 1) {
+				return ResponseEntity.ok(user);
+			}
+			return new ResponseEntity<String>("Error al crear el usuario", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return new ResponseEntity<String>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<String>("Error al crear el usuario", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@GetMapping("/logout")

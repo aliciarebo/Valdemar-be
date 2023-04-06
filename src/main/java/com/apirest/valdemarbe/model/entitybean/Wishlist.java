@@ -20,10 +20,11 @@ public class Wishlist implements Serializable {
 
     @ManyToMany
     @JoinTable(name = "books_wishlists", joinColumns = {
-            @JoinColumn(name = "id_book")
-    }, inverseJoinColumns = {
             @JoinColumn(name = "id_wishlist")
+    }, inverseJoinColumns = {
+            @JoinColumn(name = "id_book")
     })
+
     private List<Book> books;
 
     public Wishlist() {

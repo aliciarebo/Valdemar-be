@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -24,6 +25,7 @@ public class User implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "id_wishlist")
+    @JsonIgnore
     private Wishlist wishlist;
 
     @ManyToOne

@@ -29,8 +29,8 @@ public class Book implements Serializable {
     @JoinColumn(name = "id_collection")
     private Collection collection;
 
-    @ManyToMany(mappedBy = "books")
-    private List<Wishlist> wishlists;
+    // @ManyToMany(mappedBy = "books")
+    // private List<Wishlist> wishlists;
 
     @ManyToMany
     @JoinTable(name = "books_genres", joinColumns = {

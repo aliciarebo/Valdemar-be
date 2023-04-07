@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -69,4 +70,30 @@ public class WishlistRestController {
         return new ResponseEntity<String>("Libro añadido a la lista de deseos",
                 HttpStatus.OK);
     }
+
+    @DeleteMapping
+    ResponseEntity<?> deleteBookOfWishlist(HttpServletRequest request, @RequestBody Book rqBodyBook) {
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtTokenUtil.getEmailFromToken(token);
+
+        User user = userService.findByEmail(email);
+        Book book = bookService.findOne(rqBodyBook.getIsbn());
+
+        if (book == null) {
+            return new ResponseEntity<String>("El libro no existe",
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        if (user.getWishlist().getBooks().contains(book)) {
+
+            user.getWishlist().getBooks().remove(book);
+            userService.saveUser(user);
+            return new ResponseEntity<String>("Libro borrado de la lista de deseos",
+                    HttpStatus.OK);
+        }
+
+        return new ResponseEntity<String>("El libro ya no está en la wishlist",
+                HttpStatus.BAD_REQUEST);
+    }
+
 }

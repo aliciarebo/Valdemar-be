@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -87,6 +88,27 @@ public class BookRestController {
         }
 
         return new ResponseEntity<String>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateBook(@PathVariable("id") String id, @RequestBody Book book) {
+
+        if (bookService.findOne(id) == null) {
+            return new ResponseEntity<String>("No existe el libro", HttpStatus.NOT_FOUND);
+        }
+
+        book.setAuthor(book.getAuthor());
+        book.setCollection(book.getCollection());
+        book.setDate(book.getDate());
+        book.setDescription(book.getDescription());
+        book.setGenres(book.getGenres());
+        book.setImage(book.getImage());
+        book.setPrice(book.getPrice());
+        book.setTitle(book.getTitle());
+
+        bookService.saveBook(book);
+
+        return new ResponseEntity<Book>(book, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

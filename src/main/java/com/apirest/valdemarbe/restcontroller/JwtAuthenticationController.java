@@ -82,6 +82,10 @@ public class JwtAuthenticationController {
 
 	@PostMapping("/register")
 	public ResponseEntity<?> saveUser(@RequestBody User user) throws Exception {
+		User existingUser = userService.findByEmail(user.getEmail());
+		if (existingUser != null) {
+			return new ResponseEntity<String>("El correo electrónico ya está registrado", HttpStatus.BAD_REQUEST);
+		}
 		String password = user.getPassword();
 		user.setPassword(bcryptEncoder.encode(password));
 		user.setEnable(1);

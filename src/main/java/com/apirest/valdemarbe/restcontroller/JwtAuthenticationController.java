@@ -13,10 +13,12 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -106,6 +108,47 @@ public class JwtAuthenticationController {
 		return new ResponseEntity<String>("Error al crear el usuario", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
+	@PutMapping("/profile")
+	public ResponseEntity<?> updateUser(@RequestBody User updatedUser,
+			HttpServletRequest request) {
+		String token = extractTokenFromRequest(request);
+		if (token == null) {
+			return new ResponseEntity<String>("No se proporcionó un token de autenticación", HttpStatus.UNAUTHORIZED);
+		}
+
+		// Verificar si el usuario actual coincide con el usuario que está intentando
+		// modificar los datos
+		String tokenEmail = jwtTokenUtil.getEmailFromToken(token);
+
+		User existingUser = userService.findByEmail(tokenEmail);
+		if (existingUser == null) {
+			return new ResponseEntity<String>("El usuario no existe", HttpStatus.BAD_REQUEST);
+		}
+
+		String password = updatedUser.getPassword();
+		// Actualizar los datos del usuario
+		String newEmail = updatedUser.getEmail();
+		if (newEmail != null && !newEmail.isEmpty()) {
+
+			// Verificar si el nuevo email ya está registrado por otro usuario
+			User userWithNewEmail = userService.findByEmail(newEmail);
+			if (userWithNewEmail != null) {
+				return new ResponseEntity<String>("El correo electrónico ya está registrado por otro usuario",
+						HttpStatus.BAD_REQUEST);
+			}
+			existingUser.setEmail(newEmail);
+			existingUser.getEmail();
+		}
+
+		existingUser.setEnable(1);
+		existingUser.setName(updatedUser.getName());
+		existingUser.setPassword(bcryptEncoder.encode(password));
+
+		userService.saveUser(existingUser);
+
+		return ResponseEntity.ok(existingUser);
+	}
+
 	@GetMapping("/logout")
 	public ResponseEntity<?> logout(HttpServletRequest request) {
 		// invalidar el token de usuario y redirigirlo al login
@@ -134,5 +177,13 @@ public class JwtAuthenticationController {
 		} catch (BadCredentialsException e) {
 			throw new Exception("INVALID_CREDENTIALS", e);
 		}
+	}
+
+	private String extractTokenFromRequest(HttpServletRequest request) {
+		String bearerToken = request.getHeader("Authorization");
+		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+			return bearerToken.substring(7);
+		}
+		return null;
 	}
 }
